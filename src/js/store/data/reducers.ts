@@ -30,12 +30,15 @@ interface ITeachersKey {
     label: string // label of a teacher(name)
 }
 
-interface ITimetable {
+export interface ITimetable {
     [key: string]: string[]
 }
 
 export interface IDataReducer {
+    vk_platform: string,
+
     timetable: ITimetable,
+    editTimetable: ITimetable,
 
     lessons: ILessons,
     lessonsKey: ILessonsKey[],
@@ -45,11 +48,15 @@ export interface IDataReducer {
 
     keys: string[],
 
-    timetableActiveDay: number
+    timetableActiveDay: number,
+    editTimetableActiveDay: number,
 }
 
 export const initialState: IDataReducer = {
+    vk_platform: "",
+
     timetable: {},
+    editTimetable: {},
 
     lessons: {},
     lessonsKey: [],
@@ -59,7 +66,8 @@ export const initialState: IDataReducer = {
 
     keys: [],
     
-    timetableActiveDay: 0
+    timetableActiveDay: 0,
+    editTimetableActiveDay: 0,
 };
 
 interface IAction {

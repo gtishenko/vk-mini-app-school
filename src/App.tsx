@@ -16,10 +16,12 @@ import {
     Group,
     Cell,
     Panel,
-    Platform
+    Platform,
+    WebviewType
 } from "@vkontakte/vkui";
 
 import HomePanelBase from './js/panels/home/base';
+import HomePanelEdit from './js/panels/home/edit';
 
 import MorePanelBase from './js/panels/more/base';
 
@@ -33,11 +35,12 @@ import { IStore } from './js/store/reducers';
 import { getActivePanel } from './js/services/functions';
 
 import noConnection from "./images/no-connection.svg";
+import { setData } from './js/store/data/actions';
 
 export default function App() {
     const vk_platform: string | null = new URLSearchParams(window.location.search).get("vk_platform");
     
-    const [platform, setPlatform] = useState(Platform.IOS);
+    const [platform, setPlatform] = useState(Platform.VKCOM);
     const [lastAndroidBackAction, setLastAndroidBackAction] = useState(0);
     const [history, setHistory] = useState<any>(undefined);
     const [popout, setPopout] = useState<any>(null);
@@ -54,9 +57,10 @@ export default function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(setData("vk_platform", vk_platform));
         if (vk_platform === 'mobile_web' || vk_platform === 'desktop_web') setPlatform(Platform.VKCOM);
         else if (vk_platform === 'mobile_android' || vk_platform === 'mobile_android_messenger') setPlatform(Platform.ANDROID);
-        else setPlatform(Platform.IOS)
+        else setPlatform(Platform.IOS);
 
         window.onpopstate = () => {
             let timeNow = +new Date();
@@ -100,7 +104,7 @@ export default function App() {
     const hasHeader: boolean = vk_platform !== "desktop_web";
 
     return (
-        <ConfigProvider platform={platform} isWebView={true}>
+        <ConfigProvider platform={platform} webviewType={vk_platform === "desktop_web" ? WebviewType.INTERNAL : WebviewType.VKAPPS} isWebView={true} >
             <AdaptivityProvider>
                 <AppRoot>
                     <img alt="no-connection" src={noConnection} style={{ display: "none" }}/>
@@ -174,6 +178,7 @@ export default function App() {
                                         onSwipeBack={() => dispatch(goBack())}
                                     >
                                         <HomePanelBase id="base" snackbar={activeSnackbar} />
+                                        <HomePanelEdit id="edit" snackbar={activeSnackbar} />
                                     </View>
                                 </Root>
                                 <Root id="more" activeView={activeView!}>

@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     Cell,
     Div,
     Group,
-    HorizontalCell,
-    HorizontalScroll,
     Panel,
     PanelHeader,
     PanelHeaderButton,
@@ -25,15 +23,8 @@ import { getTimetable } from '../../API/functions';
 import { IStore } from '../../store/reducers';
 import { icons } from '../../data/icons';
 import { hexToRGB } from '../../data/colors';
-
-const days = [
-    {abbreviated: "пн", full: "Понедельник", key: "monday"},
-    {abbreviated: "вт", full: "Вторник", key: "tuesday"},
-    {abbreviated: "ср", full: "Среда", key: "wednesday"},
-    {abbreviated: "чт", full: "Четверг", key: "thursday"},
-    {abbreviated: "пт", full: "Пятница", key: "friday"},
-    {abbreviated: "сб", full: "Суббота", key: "saturday"},
-];
+import Days from '../../components/Days';
+import { days } from '../../data/more';
 
 interface IProps {
     id: string,
@@ -42,8 +33,6 @@ interface IProps {
 
 export default function HomePanelBase(props: IProps) {
     const { id, snackbar } = props;
-
-    const daysScroll = useRef<HTMLDivElement>(null);
 
     const timetable = useSelector((store: IStore) => store.data.timetable);
     const activeDay = useSelector((store: IStore) => store.data.timetableActiveDay);
@@ -71,57 +60,18 @@ export default function HomePanelBase(props: IProps) {
 
     useEffect(() => mount(), []);
 
-    function horizontalScroll(e: any) {
-        let scrollLeft: string | null = e.target.scrollLeft;
-        
-        if(scrollLeft) {
-            let next = Math.floor((Number.parseInt(scrollLeft) + 50) / (71 * days.length) * days.length);
-            if(activeDay !== next) dispatch(setData("timetableActiveDay", next));
-        }
-    }
-
-    function clickMark(index: number, type: number = 0) {
-        if(daysScroll.current) {
-            daysScroll.current.scrollTo({
-                left: index * 71,
-                behavior: type === 0 ? "smooth" : "auto"
-            });
-        }
-        // bridge.send("VKWebAppTapticSelectionChanged", {});
-    }
-
     function openEdit() {
-        dispatch(setData("editTimetable", ""));
+        dispatch(setData("editTimetable", JSON.parse(JSON.stringify(timetable))));
         dispatch(setPage("home", "edit"));
     }
 
     return (
         <Panel id={id}>
             <PanelHeader left={<PanelHeaderButton disabled={loader} onClick={() => openEdit()}><Icon28SlidersOutline /></PanelHeaderButton>}>Расписание</PanelHeader>
+            {/* TODO: PullToRefresh */}
             <Group>
                 {loader ? <PanelSpinner /> : !error && <>
-                    <HorizontalScroll
-                        getRef={daysScroll}
-                        onScroll={horizontalScroll}
-                        className="days"
-                        showArrows
-                        getScrollToLeft={i => i - 71}
-                        getScrollToRight={i => i + 71}
-                    >
-                        <div className="display-flex">
-                            {days.map((item, index) => <HorizontalCell
-                                className={(index === days.length-1 ? "last " : "") + (index === activeDay ? "activeCell" : "")}
-                                onClick={() => clickMark(index)}
-                            >
-                                <div className="daySelect">
-                                    <Title level="2" weight="heavy">
-                                        {item.abbreviated}
-                                    </Title>
-                                </div>
-                            </HorizontalCell>)}
-                        </div>
-                    </HorizontalScroll>
-
+                    <Days type="base" />
                     <Div>
                         <Title level="1" weight="heavy" style={{ paddingBottom: 8 }}>
                             {days[activeDay].full}

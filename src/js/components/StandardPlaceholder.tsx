@@ -7,7 +7,7 @@ import {
 } from "@vkontakte/vkui";
 import { Icon56InfoOutline } from '@vkontakte/icons';
 
-type Types = "noInternet" | "noLessons";
+type Types = "noInternet" | "noLessons" | "noLessonsEdit";
 
 interface IProps {
     type: Types,
@@ -27,7 +27,7 @@ export default function StandardPlaceholder(props: IProps): JSX.Element {
                 Похоже что-то случилось с вашим интернет-соединением. Пожалуйста, подождите или попробуйте позже
             </Placeholder>
         )
-    } else {
+    } else if(type === "noLessons") {
         return (
             <Placeholder
                 icon={<Icon56InfoOutline />}
@@ -35,6 +35,16 @@ export default function StandardPlaceholder(props: IProps): JSX.Element {
                 action={<Button onClick={onClick} size="m">Редактировать расписание</Button>}
             >
                 Заполните расписание, нажав на кнопку ниже
+            </Placeholder>
+        )
+    } else {
+        return (
+            <Placeholder
+                icon={<Icon56InfoOutline />}
+                header="Тут ничего нет"
+                action={<Button onClick={onClick} size="m">Добавить предмет</Button>}
+            >
+                Добавьте первый предмет в расписание, нажав на кнопку ниже
             </Placeholder>
         )
     }

@@ -38,6 +38,10 @@ a, div, img, p, button {
     display: flex;
 }
 
+.mt-8 {
+    margin-top: 8px;
+}
+
 /* home — base */
 
 .daySelect {
