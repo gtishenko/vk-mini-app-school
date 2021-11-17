@@ -95,7 +95,6 @@ export async function createTeacher(key: string, label: string, email: string | 
     return true;
 }
 
-
 export async function getTimetable() {
     const promise = new Promise(async (resolve, reject) => {
         let keys: string[] = [];
@@ -158,7 +157,6 @@ export async function getTimetable() {
     let timetable: ITimetable = {};
 
     await promise.then((data: any) => {
-        console.log(data.keys);
         for (let i = 0; i < data.keys.length; i++) {
             if (data.keys[i].key.split("_")[0] === "lesson") {
                 let key = data.keys[i].key.split("_")[1];
@@ -188,10 +186,6 @@ export async function getTimetable() {
 
     store.dispatch(setData("lessonsKey", lessonsKey));
     store.dispatch(setData("teachersKey", teachersKey));
-
-    setTimeout(() => {
-        console.log(store.getState().data);
-    }, 1000);
 
     return true;
 }

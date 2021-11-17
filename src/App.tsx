@@ -25,12 +25,14 @@ import MorePanelBase from './js/panels/more/base';
 
 import ExampleModal from './js/components/modals/ExampleModal';
 
-import { Icon28Newsfeed, Icon28NewsfeedOutline, Icon28ServicesOutline, Icon28MessageOutline, Icon28ClipOutline, Icon28UserCircleOutline, Icon28More } from '@vkontakte/icons';
+import { Icon28Newsfeed, Icon28NewsfeedOutline, Icon28More } from '@vkontakte/icons';
 
 import { goBack, setStory, closeModal } from './js/store/router/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { IStore } from './js/store/reducers';
 import { getActivePanel } from './js/services/functions';
+
+import noConnection from "./images/no-connection.svg";
 
 export default function App() {
     const vk_platform: string | null = new URLSearchParams(window.location.search).get("vk_platform");
@@ -101,6 +103,7 @@ export default function App() {
         <ConfigProvider platform={platform} isWebView={true}>
             <AdaptivityProvider>
                 <AppRoot>
+                    <img alt="no-connection" src={noConnection} style={{ display: "none" }}/>
                     <SplitLayout
                         header={hasHeader && <PanelHeader separator={false} />}
                         style={{ justifyContent: "center" }}
@@ -191,3 +194,5 @@ export default function App() {
         </ConfigProvider>
     )
 }
+
+export var noConnectionImage = noConnection;

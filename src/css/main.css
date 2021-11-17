@@ -1,3 +1,5 @@
+/* Basic Reset */
+
 .div-center {
     display: table;
     margin: 0 auto;
@@ -26,6 +28,65 @@ a, div, img, p, button {
     background-color: #EBEDE0;
 }
 
+/* common styles */
+
 .vkuiLink:active {
     opacity: 0.59;
+}
+
+.display-flex {
+    display: flex;
+}
+
+/* home — base */
+
+.daySelect {
+    width: 55px;
+    display: flex;
+    background-color: var(--content_tint_background);
+    border-radius: 10px;
+    align-items: center;
+    justify-content: space-between;
+    transition: .5s;
+    flex-direction: column;
+}
+
+.daySelect .vkuiTitle {
+    color: var(--header_text_secondary);
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+
+.activeCell .daySelect {
+    background-color: var(--accent);
+}
+
+.days .activeCell .vkuiHorizontalCell__body {
+    transform: scale(1.1);
+}
+
+.days .vkuiHorizontalCell .vkuiHorizontalCell__body {
+    transition: .5s;
+    border-radius: 10px;
+}
+
+.activeCell .daySelect .vkuiTitle {
+    color: #FFFFFF;
+}
+
+.last {
+    padding-right: calc(100% - 64px - 8px - 15px);
+}
+
+.icon {
+    margin-right: 14px;
+    display: flex;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+}
+
+.icon svg {
+    width: 28px;
 }

@@ -1,9 +1,65 @@
 import {SET_DATA} from './actionTypes';
 
-export interface IDataReducer {
+interface ILessons {
+    [key: string]: {
+        teacher: string, // id of a teacher
+        name: string, // lesson name
+        color: string, // color HEX
+        icon: number, // id of icon
+        cabinet: number // number of cabintet
+    }
 }
 
-const initialState: IDataReducer = {
+interface ITeachers {
+    [key: string]: {
+        label: string, // label of a teacher(name)
+        email: string | null, // email of a teacher
+        phone: string | null, // phone of a teacher
+        vk: string | null, // vk of a teacher
+    }
+}
+
+interface ILessonsKey {
+    key: string, // key(ID)
+    timestamp: number // date of creation(for sorting)
+}
+
+interface ITeachersKey {
+    key: string, // key(ID)
+    timestamp: number, // date of creation(for sorting)
+    label: string // label of a teacher(name)
+}
+
+interface ITimetable {
+    [key: string]: string[]
+}
+
+export interface IDataReducer {
+    timetable: ITimetable,
+
+    lessons: ILessons,
+    lessonsKey: ILessonsKey[],
+
+    teachers: ITeachers,
+    teachersKey: ITeachersKey[],
+
+    keys: string[],
+
+    timetableActiveDay: number
+}
+
+export const initialState: IDataReducer = {
+    timetable: {},
+
+    lessons: {},
+    lessonsKey: [],
+
+    teachers: {},
+    teachersKey: [],
+
+    keys: [],
+    
+    timetableActiveDay: 0
 };
 
 interface IAction {

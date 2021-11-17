@@ -1,17 +1,5 @@
 import { store } from "../../index";
 
-export async function fetchN(query: string) {
-    const promise = await new Promise((resolve, reject) => {
-        fetch(query).then(response => response.text())
-            .then(resolve)
-            .catch((error) => {
-                console.error(error);
-                reject(error);
-            });
-    });
-    return promise;
-}
-
 export const smoothScrollToTop = () => {
     const c = document.documentElement.scrollTop || document.body.scrollTop;
 
