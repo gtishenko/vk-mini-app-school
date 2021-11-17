@@ -1,6 +1,24 @@
 import bridge from '@vkontakte/vk-bridge';
 import { setData } from '../store/data/actions';
 import { store } from '../../index';
+import { ITimetable } from '../store/data/reducers';
+import { days } from '../data/more';
+
+export async function saveTimetable(newTimetable: ITimetable) {
+    let timetable: ITimetable = store.getState().data.timetable;
+
+    for (let i = 0; i < days.length; i++) {
+        if(JSON.stringify(timetable[days[i].key]) !== JSON.stringify(newTimetable[days[i].key])) await bridge.send("VKWebAppStorageSet", {"key": days[i].key, "value": JSON.stringify(newTimetable[days[i].key])})
+        .catch((error) => {
+            console.error(error);
+            return false;
+        });
+    }
+
+    store.dispatch(setData("timetable", newTimetable));
+    
+    return true;
+}
 
 export async function createLesson(key: string, teacher: string, name: string, color: string, icon: number, cabinet: number, timestamp: number) {
     let keys = [...store.getState().data.keys];
