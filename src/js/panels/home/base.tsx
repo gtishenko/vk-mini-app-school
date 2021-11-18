@@ -73,7 +73,7 @@ export default function HomePanelBase(props: IProps) {
                 {loader ? <PanelSpinner /> : !error && <>
                     <Days type="base" />
                     <Div>
-                        <Title level="1" weight="heavy" style={{ paddingBottom: 8 }}>
+                        <Title level="1" weight="heavy" className="pb-8">
                             {days[activeDay].full}
                         </Title>
                         {timetable[days[activeDay].key].length === 0 && <StandardPlaceholder type="noLessons" onClick={() => openEdit()} />}

@@ -22,6 +22,7 @@ import {
 
 import HomePanelBase from './js/panels/home/base';
 import HomePanelEdit from './js/panels/home/edit';
+import HomePanelSelectLesson from './js/panels/home/selectLesson';
 
 import MorePanelBase from './js/panels/more/base';
 
@@ -179,6 +180,7 @@ export default function App() {
                                     >
                                         <HomePanelBase id="base" snackbar={activeSnackbar} />
                                         <HomePanelEdit id="edit" snackbar={activeSnackbar} />
+                                        <HomePanelSelectLesson id="selectLesson" snackbar={activeSnackbar} />
                                     </View>
                                 </Root>
                                 <Root id="more" activeView={activeView!}>

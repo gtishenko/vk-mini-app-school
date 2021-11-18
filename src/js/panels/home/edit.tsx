@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 import {
     Button,
     Cell,
     Div,
     Group,
-    HorizontalCell,
-    HorizontalScroll,
     Panel,
     PanelHeader,
     PanelHeaderBack,
@@ -68,7 +66,7 @@ export default function HomePanelEdit(props: IProps) {
             <Group>
                 <Days type="edit" />
                 <Div>
-                    <Title level="1" weight="heavy" style={{ paddingBottom: 8 }}>
+                    <Title level="1" weight="heavy" className="pb-8">
                         {days[activeDay].full}
                     </Title>
                     {timetable[days[activeDay].key].length === 0 && <StandardPlaceholder type="noLessonsEdit" onClick={() => dispatch(setPage("home", "selectLesson"))} />}
