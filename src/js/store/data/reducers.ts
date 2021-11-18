@@ -1,4 +1,10 @@
-import {SET_DATA} from './actionTypes';
+import { RESET_CREATE_LESSON_DATA, SET_DATA } from './actionTypes';
+import { colors } from '../../data/colors';
+
+interface INewTeachers {
+    value: string, // key(ID)
+    label: string // label of a teacher(name)
+}
 
 interface ILessons {
     [key: string]: {
@@ -25,7 +31,7 @@ interface ILessonsKey {
 }
 
 interface ITeachersKey {
-    key: string, // key(ID)
+    value: string, // key(ID)
     timestamp: number, // date of creation(for sorting)
     label: string // label of a teacher(name)
 }
@@ -50,6 +56,14 @@ export interface IDataReducer {
 
     timetableActiveDay: number,
     editTimetableActiveDay: number,
+
+    createLessonSelectedColor: string,
+    createLessonSelectedIcon: number,
+    createLessonName: string,
+    createLessonTeacherValue: string,
+    
+    createLessonCabinet: string,
+    createLessonNewUsers: INewTeachers[],
 }
 
 export const initialState: IDataReducer = {
@@ -65,9 +79,16 @@ export const initialState: IDataReducer = {
     teachersKey: [],
 
     keys: [],
-    
+
     timetableActiveDay: 0,
     editTimetableActiveDay: 0,
+
+    createLessonSelectedColor: colors[0],
+    createLessonSelectedIcon: 0,
+    createLessonName: "",
+    createLessonTeacherValue: "",
+    createLessonCabinet: "",
+    createLessonNewUsers: [],
 };
 
 interface IAction {
@@ -81,7 +102,19 @@ interface IAction {
 export const dataReducer = (state = initialState, action: IAction) => {
 
     switch (action.type) {
-        
+
+        case RESET_CREATE_LESSON_DATA: {
+            return {
+                ...state,
+                createLessonSelectedColor: colors[0],
+                createLessonSelectedIcon: 0,
+                createLessonName: "",
+                createLessonTeacherValue: "",
+                createLessonNewUsers: [],
+                createLessonCabinet: "",
+            };
+        }
+
         case SET_DATA: {
             return {
                 ...state,

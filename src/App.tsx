@@ -26,7 +26,8 @@ import HomePanelSelectLesson from './js/panels/home/selectLesson';
 
 import MorePanelBase from './js/panels/more/base';
 
-import ExampleModal from './js/components/modals/ExampleModal';
+import CreateLessonFirstModal from './js/components/modals/CreateLessonFirstModal';
+import CreateLessonSecondModal from './js/components/modals/CreateLessonSecondModal';
 
 import { Icon28Newsfeed, Icon28NewsfeedOutline, Icon28More } from '@vkontakte/icons';
 
@@ -94,8 +95,12 @@ export default function App() {
 
     const homeModals: any = (
         <ModalRoot activeModal={activeModal}>
-            <ExampleModal
-                id="EXAMPLE_MODAL"
+            <CreateLessonFirstModal
+                id="CREATE_LESSON_FIRST_MODAL"
+                onClose={() => dispatch(closeModal())}
+            />
+            <CreateLessonSecondModal
+                id="CREATE_LESSON_SECOND_MODAL"
                 onClose={() => dispatch(closeModal())}
             />
         </ModalRoot>

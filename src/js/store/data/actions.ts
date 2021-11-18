@@ -1,4 +1,4 @@
-import {SET_DATA} from './actionTypes';
+import { SET_DATA, RESET_CREATE_LESSON_DATA } from './actionTypes';
 
 export const setData = (variable: string, value: any) => (
     {
@@ -7,5 +7,11 @@ export const setData = (variable: string, value: any) => (
             variable: variable,
             value: value
         }
+    }
+);
+
+export const resetCreateLessonData = () => (
+    {
+        type: RESET_CREATE_LESSON_DATA
     }
 );

@@ -104,3 +104,87 @@ a, div, img, p, button {
     width: 28px;
     margin-right: 16px;
 }
+
+/* CreateLessonFirstModal.tsx */
+.create-lesson-first-page {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.select-item {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.iconPreview {
+    background-color: var(--field_background);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.iconPreview svg {
+    width: 60%;
+    height: auto;
+    transition: .5s;
+}
+
+.create-lesson-form-item {
+    width: 100%;
+}
+
+.create-lesson-form-item .vkuiInput {
+    font-weight: 800;
+    margin-top: 28px;
+    width: 100%; 
+}
+
+.create-lesson-form-item input {
+    font-weight: 800;
+}
+
+.selectColor {
+    width: calc(100% / 8 - 24px - 2px);
+    margin: 7px 12px;
+    border-radius: 50%;
+    transition: .3s;
+}
+
+.selectColor:active, .selectIcon:active {
+    opacity: .7;
+}
+
+.selectColor.active {
+    -webkit-box-shadow: 0px 0px 0px 3px var(--background_content), 0px 0px 0px 7px var(--accent); 
+    box-shadow: 0px 0px 0px 3px var(--background_content), 0px 0px 0px 7px var(--accent);
+}
+
+.selectIcon {
+    width: calc(100% / 5 - 24px - 2px);
+    margin: 7px 12px;
+    border-radius: 50%;
+    transition: .3s;
+    background-color: var(--field_background);
+    display: flex;
+    justify-content: center;
+}
+
+.selectIcon svg {
+    width: 50%;
+    height: auto;
+}
+
+.selectIcon.active svg {
+    fill: #FFFFFF;
+}
+
+.selectIcon.active {
+    background-color: #FEAA29;
+    border-radius: 12px;
+}
