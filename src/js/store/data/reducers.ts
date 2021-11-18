@@ -6,7 +6,7 @@ interface ILessons {
         name: string, // lesson name
         color: string, // color HEX
         icon: number, // id of icon
-        cabinet: number // number of cabintet
+        cabinet: string | null // number of cabintet
     }
 }
 

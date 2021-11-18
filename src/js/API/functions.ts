@@ -20,15 +20,16 @@ export async function saveTimetable(newTimetable: ITimetable) {
     return true;
 }
 
-export async function createLesson(key: string, teacher: string, name: string, color: string, icon: number, cabinet: number, timestamp: number) {
+export async function createLesson(key: string, teacher: string, name: string, color: string, icon: number, cabinet: string | null) {
     let keys = [...store.getState().data.keys];
+    let timestamp = Math.round(Date.now() / 1000);
 
     interface INewLesson {
         teacher: string,
         name: string,
         color: string,
         icon: number,
-        cabinet: number,
+        cabinet: string | null,
         timestamp: number
     }
 
@@ -40,8 +41,8 @@ export async function createLesson(key: string, teacher: string, name: string, c
         cabinet: cabinet, // number of cabintet
         timestamp: timestamp // time of creation for sorting
     };
-    await bridge.send("VKWebAppStorageSet", { "key": "teacher_" + key, "value": JSON.stringify(newLesson) }).then(() => {
-        keys.push("teacher_" + key);
+    await bridge.send("VKWebAppStorageSet", { "key": "lesson_" + key, "value": JSON.stringify(newLesson) }).then(() => {
+        keys.push("lesson_" + key);
         bridge.send("VKWebAppStorageSet", { "key": "keys", "value": JSON.stringify(keys) });
 
         store.dispatch(setData("keys", keys));
@@ -68,8 +69,9 @@ export async function createLesson(key: string, teacher: string, name: string, c
     return true;
 }
 
-export async function createTeacher(key: string, label: string, email: string | null, phone: string | null, vk: string | null, timestamp: number) {
+export async function createTeacher(key: string, label: string, email: string | null, phone: string | null, vk: string | null) {
     let keys = [...store.getState().data.keys];
+    let timestamp = Math.round(Date.now() / 1000);
 
     interface INewTeacher {
         label: string, // label of a teacher(name)
@@ -101,7 +103,7 @@ export async function createTeacher(key: string, label: string, email: string | 
             phone: phone,
             vk: vk,
         };
-        teachersKey.push({ key: key, timestamp: timestamp, label: label });
+        teachersKey.push({ value: key, timestamp: timestamp, label: label });
 
         store.dispatch(setData("teachers", teachers));
         store.dispatch(setData("teachersKey", teachersKey));
@@ -159,7 +161,7 @@ export async function getTimetable() {
     }
 
     interface ITeachersKey {
-        key: string, // key(ID)
+        value: string, // key(ID)
         timestamp: number, // date of creation(for sorting)
         label: string // label of a teacher(name)
     }
@@ -177,15 +179,18 @@ export async function getTimetable() {
     await promise.then((data: any) => {
         for (let i = 0; i < data.keys.length; i++) {
             if (data.keys[i].key.split("_")[0] === "lesson") {
+                if(data.keys[i].value === "") continue;
                 let key = data.keys[i].key.split("_")[1];
                 let lesson = JSON.parse(data.keys[i].value);
                 lessonsKey.push({ key: key, timestamp: lesson['timestamp'] });
                 delete lesson['timestamp'];
                 lessons[key] = lesson;
             } else if (data.keys[i].key.split("_")[0] === "teacher") {
+                if(data.keys[i].value === "") continue;
                 let key = data.keys[i].key.split("_")[1];
                 let teacher = JSON.parse(data.keys[i].value);
-                teachersKey.push({ key: key, timestamp: teacher['timestamp'], label: teacher['label'] });
+                if(teacher.label === undefined) continue;
+                teachersKey.push({ value: key, timestamp: teacher['timestamp'], label: teacher['label'] });
                 delete teacher['timestamp'];
                 teachers[key] = teacher;
             } else {
