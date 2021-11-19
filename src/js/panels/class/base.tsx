@@ -11,7 +11,7 @@ interface IProps {
     snackbar: JSX.Element | null
 }
 
-export default function MorePanelBase(props: IProps) {
+export default function ClassPanelBase(props: IProps) {
     const { id, snackbar } = props;
 
     return (

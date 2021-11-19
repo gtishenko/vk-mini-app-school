@@ -72,8 +72,10 @@ export default function CreateLessonSecondModal(props: IProps) {
         console.log("createLesson:", makeid(8), teacherValue, name, color, icon, cabinet.trim() ? cabinet.trim() : null);
         const status = await createLesson(makeid(8), teacherValue, name, color, icon, cabinet.trim() ? cabinet.trim() : null);
         if(!status) return dispatch(showSnackbar("error", "Что-то пошло не так. Попробуйте ещё раз"));
-        onClose();
-        onClose();
+        if(status) {
+            onClose();
+            onClose();
+        }
     }
 
     function makeid(length: number) {

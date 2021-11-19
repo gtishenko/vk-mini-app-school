@@ -24,12 +24,16 @@ import HomePanelBase from './js/panels/home/base';
 import HomePanelEdit from './js/panels/home/edit';
 import HomePanelSelectLesson from './js/panels/home/selectLesson';
 
-import MorePanelBase from './js/panels/more/base';
+import HomeworkPanelBase from './js/panels/homework/base';
+
+import ProfilePanelBase from './js/panels/profile/base';
+
+import ClassPanelBase from './js/panels/class/base';
 
 import CreateLessonFirstModal from './js/components/modals/CreateLessonFirstModal';
 import CreateLessonSecondModal from './js/components/modals/CreateLessonSecondModal';
 
-import { Icon28Newsfeed, Icon28NewsfeedOutline, Icon28More } from '@vkontakte/icons';
+import { Icon28CalendarOutline, Icon28Profile, Icon28SchoolOutline, Icon28WriteSquareOutline } from '@vkontakte/icons';
 
 import { goBack, setStory, closeModal } from './js/store/router/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -131,21 +135,43 @@ export default function App() {
                                                 backgroundColor: "var(--button_secondary_background)",
                                                 borderRadius: 8
                                             } : {}}
-                                            before={<Icon28NewsfeedOutline />}
+                                            before={<Icon28CalendarOutline />}
                                             onClick={() => dispatch(setStory("home", "base"))}
                                         >
                                             Главная
                                             </Cell>
                                         <Cell
-                                            disabled={activeStory === 'more'}
-                                            style={activeStory === 'more' ? {
+                                            disabled={activeStory === 'homework'}
+                                            style={activeStory === 'homework' ? {
                                                 backgroundColor: "var(--button_secondary_background)",
                                                 borderRadius: 8
                                             } : {}}
-                                            before={<Icon28More />}
-                                            onClick={() => dispatch(setStory("more", "base"))}
+                                            before={<Icon28WriteSquareOutline />}
+                                            onClick={() => dispatch(setStory("homework", "base"))}
                                         >
-                                            Ещё
+                                            Домашние задания
+                                        </Cell>
+                                        <Cell
+                                            disabled={activeStory === 'profile'}
+                                            style={activeStory === 'profile' ? {
+                                                backgroundColor: "var(--button_secondary_background)",
+                                                borderRadius: 8
+                                            } : {}}
+                                            before={<Icon28Profile />}
+                                            onClick={() => dispatch(setStory("profile", "base"))}
+                                        >
+                                            Профиль
+                                        </Cell>
+                                        <Cell
+                                            disabled={activeStory === 'class'}
+                                            style={activeStory === 'class' ? {
+                                                backgroundColor: "var(--button_secondary_background)",
+                                                borderRadius: 8
+                                            } : {}}
+                                            before={<Icon28SchoolOutline />}
+                                            onClick={() => dispatch(setStory("class", "base"))}
+                                        >
+                                            Мой класс
                                         </Cell>
                                     </Group>
                                 </Panel>
@@ -164,15 +190,33 @@ export default function App() {
                                         style={{ cursor: 'pointer' }}
                                         onClick={() => dispatch(setStory('home', 'base'))}
                                         selected={activeStory === 'home'}
+                                        text="Расписание"
                                     >
-                                        <Icon28Newsfeed />
+                                        <Icon28CalendarOutline />
                                     </TabbarItem>
                                     <TabbarItem
                                         style={{ cursor: 'pointer' }}
-                                        onClick={() => dispatch(setStory('more', 'base'))}
-                                        selected={activeStory === 'more'}
+                                        onClick={() => dispatch(setStory('homework', 'base'))}
+                                        selected={activeStory === 'homework'}
+                                        text="Домашка"
                                     >
-                                        <Icon28More />
+                                        <Icon28WriteSquareOutline />
+                                    </TabbarItem>
+                                    <TabbarItem
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => dispatch(setStory('profile', 'base'))}
+                                        selected={activeStory === 'profile'}
+                                        text="Профиль"
+                                    >
+                                        <Icon28Profile />
+                                    </TabbarItem>
+                                    <TabbarItem
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => dispatch(setStory('class', 'base'))}
+                                        selected={activeStory === 'class'}
+                                        text="Мой класс"
+                                    >
+                                        <Icon28SchoolOutline />
                                     </TabbarItem>
                                 </Tabbar>
                             }>
@@ -188,14 +232,34 @@ export default function App() {
                                         <HomePanelSelectLesson id="selectLesson" snackbar={activeSnackbar} />
                                     </View>
                                 </Root>
-                                <Root id="more" activeView={activeView!}>
+                                <Root id="homework" activeView={activeView!}>
                                     <View
-                                        id="more"
-                                        activePanel={getActivePanel("more")}
+                                        id="homework"
+                                        activePanel={getActivePanel("homework")}
                                         history={history}
                                         onSwipeBack={() => dispatch(goBack())}
                                     >
-                                        <MorePanelBase id="base" snackbar={activeSnackbar} />
+                                        <HomeworkPanelBase id="base" snackbar={activeSnackbar} />
+                                    </View>
+                                </Root>
+                                <Root id="profile" activeView={activeView!}>
+                                    <View
+                                        id="profile"
+                                        activePanel={getActivePanel("profile")}
+                                        history={history}
+                                        onSwipeBack={() => dispatch(goBack())}
+                                    >
+                                        <ProfilePanelBase id="base" snackbar={activeSnackbar} />
+                                    </View>
+                                </Root>
+                                <Root id="class" activeView={activeView!}>
+                                    <View
+                                        id="class"
+                                        activePanel={getActivePanel("class")}
+                                        history={history}
+                                        onSwipeBack={() => dispatch(goBack())}
+                                    >
+                                        <ClassPanelBase id="base" snackbar={activeSnackbar} />
                                     </View>
                                 </Root>
                             </Epic>

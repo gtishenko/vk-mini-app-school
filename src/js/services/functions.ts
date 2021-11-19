@@ -31,7 +31,7 @@ export const restoreScrollPosition = () => {
     });
 };
 
-type views = "home" | "more";
+type views = "home" | "homework" | "profile" | "class";
 export const getActivePanel = (view: views) => {
     let panel: string = store.getState().router["activePanel"];
 
